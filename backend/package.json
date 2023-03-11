@@ -17,7 +17,8 @@
   "scripts": {
     "start": "cross-env NODE_PATH=./ NODE_ENV=production babel-node src/bin/www",
     "start:dev": "nodemon --watch src/app.js --watch src/ --exec babel-node src/bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel -d ./build ./src -s"
   },
   "author": "",
   "license": "ISC",
