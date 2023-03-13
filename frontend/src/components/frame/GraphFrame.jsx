@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faXmark, faCube } from "@fortawesome/free-solid-svg-icons"
 import { setRefKeys } from '../../features/cypher/CypherSlice'
 import { useDispatch } from 'react-redux'
-import { setInput, setRender } from '../../features/three/RenderSlice'
+import { setInput, setRef, setRender } from '../../features/three/RenderSlice'
 
 export const GraphFrame = ({
   rows,
@@ -92,6 +92,7 @@ export const GraphFrame = ({
   
   const renderThree = () => {
     dispatch(setRender({ render: true }))
+    dispatch(setRef({ refKey: refKey }))
   }
 
   return (
