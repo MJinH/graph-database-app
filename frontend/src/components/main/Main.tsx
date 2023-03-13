@@ -8,7 +8,7 @@ import { useState, useEffect } from "react"
 
 export const Main = () => {
 
-  const [databaseSide, setDatabaseSide] = useState<boolean>(false)
+  const [databaseSide, setDatabaseSide] = useState(false)
 
   useEffect(() => {
     const databaseDiv = document.getElementById('databaseSide')

@@ -1,11 +1,14 @@
 import { RootState } from '../../RootState'
 import { DatabaseSide, DatabaseSideElement, DatabaseSideType, EdgeElement, labelColorSettings, NodeElement, LabelWrapper, DatabaseSideWrapper } from '../../styled/Sidebar'
 import { connect } from 'react-redux/es/exports'
+import { getMetadata } from '../../features/meta/MetadataSlice'
+import { useEffect } from 'react'
 
 type DatabaseSidebarProps = {
     graph: string,
     edges: Array<any>,
     nodes: Array<any>,
+    getMeta: () => void,
 }
 
 type NodeLabelsProps = {
@@ -56,7 +59,13 @@ export const DatabaseSidebar = ({
     graph,
     edges,
     nodes,
+    getMeta,
 }: DatabaseSidebarProps): JSX.Element => {
+
+  useEffect(() => {
+    getMeta()
+  },[])
+
   return (
     <DatabaseSide id='databaseSide'>
       <DatabaseSideWrapper id='databaseWrapper'>
@@ -95,4 +104,12 @@ const mapStateToProps = (state: RootState) => {
     }
 }
 
-export default connect(mapStateToProps,null)(DatabaseSidebar)
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    getMeta: () => {
+      dispatch(getMetadata())
+    }
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(DatabaseSidebar)

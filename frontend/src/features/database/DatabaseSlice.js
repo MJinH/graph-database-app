@@ -49,12 +49,12 @@ export const connectToDatabase = createAsyncThunk(
     }
 )
 
-
 const DatabaseSlice = createSlice({
     name: "database",
     initialState: {
         databaseStatus: "disconnected",
-        error: ""
+        error: "",
+        cmd: "",
     },
     extraReducers: {
         [getDatabaseStatus.fulfilled]: (state, action) => ({
@@ -65,7 +65,7 @@ const DatabaseSlice = createSlice({
             databaseStatus: "connected",
             error: "",
         }),
-        [getDatabaseStatus.rejected]: (state, action) => ({
+        [getDatabaseStatus.rejected]: () => ({
             host: "",
             database: "",
             user: "",
@@ -81,7 +81,7 @@ const DatabaseSlice = createSlice({
             databaseStatus: "connected",
             error: "",
         }),
-        [connectToDatabase.rejected]: (state, action) => ({
+        [connectToDatabase.rejected]: () => ({
             host: "",
             database: "",
             user: "",

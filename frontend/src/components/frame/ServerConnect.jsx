@@ -1,10 +1,8 @@
-import { Dispatch } from "react"
 import { Button, Form } from "react-bootstrap"
 import { FrameContext, FrameTab } from "../../styled/Frame"
-import { Action } from 'redux'
 import { connectToDatabase } from "../../features/database/DatabaseSlice"
 import { useDispatch } from 'react-redux'
-
+import { getMetadata } from "../../features/meta/MetadataSlice"
 
 export const ServerConnect = () => {
 
@@ -21,8 +19,8 @@ export const ServerConnect = () => {
     }
     dispatch(connectToDatabase(formData)).then((response) => {
       if (response.type === 'database/connectDatabase/fulfilled') {
-        
-      }
+        dispatch(getMetadata())
+      } 
     }) 
   }
 

@@ -9,6 +9,7 @@ export const SidebarContainer = styled.div`
     align-items: center;
     flex-direction: column;
     background-color: #778899;
+    position: relative;
 `
 
 export const SidebarWrapper = styled.div`
@@ -32,9 +33,10 @@ export const SidebarElements = styled.div`
     }
 `
 export const DatabaseSide = styled.div`
+    position: absolute;
     height: 100%;
     width:0%;
-    right: 5%;
+    left: 5%;
     background-color: #808080;
     transition: 0.3s;
 `
