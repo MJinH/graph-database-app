@@ -38,8 +38,6 @@ const CypherSlice = createSlice({
         refKey: '',
     },
     reducers: {
-        setStatus: (state, {payload}) => {
-        },
         setRefKeys: (state, {payload}) => {
             state.refKeys.shift()
         }
@@ -57,11 +55,11 @@ const CypherSlice = createSlice({
                 command: action.payload.command,
                 rowCount: action.payload.rowCount,
                 columns: action.payload.columns,
-                refKey: state.refKey,
+                refKey: uuid(),
             })
         }
     }
 })
 
-export const { setStatus, setRefKeys } = CypherSlice.actions
+export const { setRefKeys } = CypherSlice.actions
 export default CypherSlice.reducer

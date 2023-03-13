@@ -51,6 +51,7 @@ export const Frame = ({
                       command={frame.command}
                       rowCount={frame.rowCount}
                       index={index}
+                      refKey={frame.refKey}
                     />
                 )
             })

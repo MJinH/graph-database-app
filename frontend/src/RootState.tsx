@@ -4,6 +4,7 @@ import alertReducer from './features/alert/AlertSlice'
 import databaseReducer from './features/database/DatabaseSlice'
 import metadataReducer from './features/meta/MetadataSlice'
 import cypherReducer from './features/cypher/CypherSlice'
+import renderReducer from './features/three/RenderSlice'
 
 export type RootState = ReturnType<typeof rootReducer>
 
@@ -12,6 +13,7 @@ export const rootReducer = combineReducers({
     databaseReducer,
     metadataReducer,
     cypherReducer,
+    render: renderReducer,
 })
 
 

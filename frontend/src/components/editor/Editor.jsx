@@ -6,21 +6,27 @@ import Frame from '../frame/Frame'
 import { useState } from 'react'
 import { executeCypher } from '../../features/cypher/CypherSlice'
 import { useDispatch } from 'react-redux'
-import { setStatus } from '../../features/cypher/CypherSlice'
+import { useSelector } from 'react-redux'
+import { setError } from '../../features/database/DatabaseSlice'
 import uuid from 'react-uuid'
+import { ThreeRenderer } from '../three/ThreeRenderer'
 
 export const Editor = () => {
 
   const dispatch = useDispatch()
   const [command, setCommand] = useState('')
-  
+  const { renderThree, inputData, currRef } = useSelector(state => state.render)
+
   const executeCommnad = () => {
     const query = {
       cmd: command,
     }
     dispatch(executeCypher(query)).then((response) => {
       if (response.type === 'database/exeucteCypher/fulfilled') {
-        dispatch(setStatus({ refKey: uuid() }))
+        dispatch(setError({ error: "" }))
+      } else if (response.type === 'database/exeucteCypher/rejected') {
+        console.log('hio')
+        dispatch(setError({ error: "Failed to execute cypher query. Please double check your query." }))
       }
     })
   }
@@ -38,7 +44,7 @@ export const Editor = () => {
         </EditorTab>
     </EditorWrapper>
     <Alert />
-    <Frame />
+    { !renderThree ? <Frame />: <ThreeRenderer inputData={inputData[currRef]} />}
     </>
   )
 }

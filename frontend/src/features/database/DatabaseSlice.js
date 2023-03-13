@@ -56,6 +56,11 @@ const DatabaseSlice = createSlice({
         error: "",
         cmd: "",
     },
+    reducers: {
+        setError: (state, {payload}) => {
+            state.error = payload.error
+        }
+    },
     extraReducers: {
         [getDatabaseStatus.fulfilled]: (state, action) => ({
             host: action.payload.host,
@@ -92,5 +97,5 @@ const DatabaseSlice = createSlice({
     }
 })
 
-
+export const { setError } = DatabaseSlice.actions
 export default DatabaseSlice.reducer

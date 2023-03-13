@@ -2,15 +2,17 @@ import { useEffect, useState } from 'react'
 import { GraphFrameContainer, GraphFrameWrapper, elementColorSettings, GraphFrameTop, GraphFrameCommand, GraphFrameIcon, GraphFrameMid } from '../../styled/Frame'
 import { CytoscapeFrame } from '../cytoscape/CytoscapeFrame'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faXmark, faCube } from "@fortawesome/free-solid-svg-icons"
 import { setRefKeys } from '../../features/cypher/CypherSlice'
 import { useDispatch } from 'react-redux'
+import { setInput, setRender } from '../../features/three/RenderSlice'
 
 export const GraphFrame = ({
   rows,
   command,
   rowCount,
   index,
+  refKey,
 }) => {
 
   const [cytoElement, setCytoElement] = useState(null)
@@ -19,6 +21,8 @@ export const GraphFrame = ({
   useEffect(() => {
     let nodes = []
     let edges = []
+    let threeNodes = []
+    let threeLinks = []
     rows?.map((row) => {
       Object.entries(row).forEach((rowEntry) => {
         const backColor = elementColorSettings[Math.floor(Math.random() * elementColorSettings.length)].background;
@@ -45,6 +49,11 @@ export const GraphFrame = ({
             alias,
             classes: 'edge'
           })
+          threeLinks.push({
+            "source": source,
+            "target": target,
+            "name": val.label,
+          })
         } else {
           nodes.push({
             group: 'nodes',
@@ -61,6 +70,11 @@ export const GraphFrame = ({
             alias,
             classes: 'node',
           })
+          threeNodes.push({
+            "id": val.id,
+            "name": val.label,
+            "val": val.properties.length >= 1 ? val.properties : '',
+          })
         }
       })
     })
@@ -68,12 +82,17 @@ export const GraphFrame = ({
       nodes: nodes, 
       edges: edges, 
     }
+    dispatch(setInput({ nodes: threeNodes, links: threeLinks, refKey: refKey }))
     setCytoElement(elements)
   }, [rows])
 
   const removeFrame = () => {
     dispatch(setRefKeys())
-  }  
+  }
+  
+  const renderThree = () => {
+    dispatch(setRender({ render: true }))
+  }
 
   return (
     <GraphFrameContainer>
@@ -83,13 +102,14 @@ export const GraphFrame = ({
             {`command: ${command}`}
           </GraphFrameCommand>
           <GraphFrameIcon>
+            <FontAwesomeIcon icon={faCube} className='three' onClick={renderThree} />
             {index === 0 && <FontAwesomeIcon icon={faXmark} className='close' onClick={removeFrame} />}
           </GraphFrameIcon>
         </GraphFrameTop>
         <GraphFrameMid>
           {`row count: ${rowCount}`}
         </GraphFrameMid>
-        { cytoElement && <CytoscapeFrame  cytoElement={cytoElement} />}
+        { cytoElement && <CytoscapeFrame cytoElement={cytoElement} />}
       </GraphFrameWrapper>
     </GraphFrameContainer>
   )

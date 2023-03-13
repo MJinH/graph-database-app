@@ -22,11 +22,11 @@ type EdgeLabelsProps = {
 const NodeLabels = ({
   nodes,
 }: NodeLabelsProps) => {
-  const list = nodes.map((node) => {
+  const list = nodes.map((node, index) => {
     const backColor = labelColorSettings[Math.floor(Math.random() * labelColorSettings.length)].background;
     const textColor = labelColorSettings[Math.floor(Math.random() * labelColorSettings.length)].color;
     return (
-      <NodeElement style={{ backgroundColor: backColor, color: textColor }}>
+      <NodeElement key={index} style={{ backgroundColor: backColor, color: textColor }}>
         {`(${node.cnt}) ${node.name}`}
       </NodeElement>
     )
@@ -41,9 +41,9 @@ const NodeLabels = ({
 const EdgeLabels = ({
  edges, 
 }: EdgeLabelsProps) => {
-  const list = edges.map((edge) => {
+  const list = edges.map((edge, index) => {
     return (
-      <EdgeElement>
+      <EdgeElement key={index} >
         {`(${edge.cnt}) ${edge.name}`}
       </EdgeElement>
     )
