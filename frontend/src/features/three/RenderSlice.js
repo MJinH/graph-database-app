@@ -18,7 +18,6 @@ const RenderSlice = createSlice({
               nodes,
               links,
             }
-            state.currRef = payload.refKey
         },
         setRef: (state, {payload}) => {
             state.currRef = payload.refKey
@@ -26,5 +25,5 @@ const RenderSlice = createSlice({
     }
 })
 
-export const { setRender, setInput } = RenderSlice.actions
+export const { setRender, setInput, setRef } = RenderSlice.actions
 export default RenderSlice.reducer

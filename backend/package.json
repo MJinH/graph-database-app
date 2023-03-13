@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "antlr4": "^4.12.0",
+    "antlr4": "4.9.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
