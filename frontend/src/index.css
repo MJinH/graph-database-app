@@ -28,3 +28,9 @@ code {
   right: 0.8rem;
   cursor: pointer;
 }
+
+.three {
+  position: absolute;
+  right: 3rem;
+  cursor: pointer;
+}

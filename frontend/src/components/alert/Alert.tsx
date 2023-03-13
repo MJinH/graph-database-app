@@ -13,7 +13,6 @@ export const Alert = ({
     error,
 }: AlertFrameProps): JSX.Element => {
   const alertStatus = window.sessionStorage.getItem('alertStatus')
-
   useEffect(() => {
     const alertDiv = document.getElementById('alertTab')
     if (error) {
@@ -25,7 +24,9 @@ export const Alert = ({
 
   return (
     <>
-    {!alertStatus && 
+    {(alertStatus && error.length < 1) ? 
+    <></>
+    :
     <AlertWrapper id='alert'>
         <AlertTab id='alertTab'>
             <AlertContent>

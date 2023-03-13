@@ -84,6 +84,28 @@ export const GraphFrameMid = styled.div`
     padding: 0.3rem 1rem;
 `
 
+export const ThreeCanvas = styled.div`
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    margin:0;
+    position: absolute;
+    overflow: hidden;
+    top:0;
+    left:0;
+`
+
+export const RenderButton = styled.button`
+    position: absolute;
+    width: 5rem;
+    hegiht: 5rem;
+    background-color: #8FBC8F;
+    top: 2rem;
+    left: 3rem;
+    z-index: 999;
+    cursor: pointer;
+`
+
 export const elementColorSettings = [
     {background: '#00FFFF', fontColor: '#2A2C34', borderColor: '#FF8C00'},
     {background: '#7fffd4', fontColor: '#2A2C34', borderColor: '#8FBC8F'},
