@@ -55,6 +55,21 @@ class DatabaseService {
         return result
     }
 
+    async executeQurey(query) {
+        const client = await this.getConnection()
+        let result = null
+        console.log(result)
+        try {
+            result = await client.query(query,[])
+            result = this.parseCypherResult(result)
+        } catch(err) {
+            throw err
+        } finally {
+            client.release()
+        }
+        return result    
+    }
+
     async releaseConnection() {
         try {
             this._pool.end()
@@ -89,7 +104,7 @@ class DatabaseService {
 
     async getGraphs() {
         const graphs = await this.executeCypher('SELECT * FROM ag_catalog.ag_graph;')
-        this._graphs = graphs.rows.map((graph) => graph.name)
+        this._graphs = graphs.rows?.map((graph) => graph.name)
     }
 
     getPgConfig(connectInfo) {
@@ -124,6 +139,16 @@ class DatabaseService {
         })
 
         return metaData
+    }
+
+    parseCypherResult(result) {
+        let columns = result.fields.map((field) => field.name)
+        return {
+            rows: result.rows,
+            command: result.command,
+            rowCount: result.rowCount,
+            columns: columns
+        }
     }
 
 

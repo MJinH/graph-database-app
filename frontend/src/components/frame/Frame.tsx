@@ -4,20 +4,24 @@ import { Action } from 'redux'
 import { connect } from 'react-redux/es/exports'
 import { setAlert } from '../../features/alert/AlertSlice'
 import { getDatabaseStatus } from '../../features/database/DatabaseSlice'
-import { FrameWrapper } from '../../styled/Frame'
+import { FrameGlobalWrapper, FrameWrapper } from '../../styled/Frame'
 import { ServerConnect } from './ServerConnect'
-import GraphFrame from './GraphFrame'
+import { GraphFrame } from './GraphFrame'
 
 type FrameProps = {
     databaseStatus: string,
     updateStatus: (status: string) => void,
     getStatus: () => void,
+    refKeys: any,
+    refKey: string,
 }
 
 export const Frame = ({
     databaseStatus,
     updateStatus,
     getStatus,
+    refKeys,
+    refKey,
 }: FrameProps): JSX.Element => {
 
   useEffect(() => {
@@ -38,21 +42,40 @@ export const Frame = ({
   const renderPage = (databaseStatus: string) => {
     const status = window.sessionStorage.getItem('databaseStatus')
     if (databaseStatus === 'connected' || status === 'connected') {
-        return (
-            <GraphFrame />
-        )
+        if (refKeys) {
+            const canvas = refKeys?.map((frame: any, index: number) => {
+                return (
+                    <GraphFrame 
+                      key={index}
+                      rows={frame.rows}
+                      command={frame.command}
+                      rowCount={frame.rowCount}
+                      index={index}
+                    />
+                )
+            })
+            return (
+              <>
+                {canvas}
+              </>
+            )
+        }
     }
     if (databaseStatus === 'disconnected') {
         return (
-            <ServerConnect />
+            <FrameWrapper>
+                <ServerConnect />
+            </FrameWrapper>
         )
     }
   }
 
   return (
-    <FrameWrapper>
+    <>
+      <FrameGlobalWrapper className='globalFrameWrapper'>
         {renderPage(databaseStatus)}
-    </FrameWrapper>
+      </FrameGlobalWrapper>
+    </>
   )
 }
 
@@ -61,6 +84,8 @@ const mapStateToProps = (state: RootState) => {
     return {
         databaseStatus: state.databaseReducer.databaseStatus,
         status: state.alertReducer.status,
+        refKey: state.cypherReducer.refKey,
+        refKeys: state.cypherReducer.refKeys,
     }
 }
 

@@ -19,7 +19,6 @@ class DatabaseController {
     }
 
     async connectDatabase(req,res) {
-        console.log(req.body)
         this._databaseService = sessionService.get(req.sessionID)
         if(!this._databaseService.isConnected()) {
             await this._databaseService.connectDatabase(req.body)
@@ -55,11 +54,12 @@ class DatabaseController {
     }
 
     async executeCypher(req,res) {
+        this._databaseService = sessionService.get(req.sessionID)
         if(!req.body) {
             res.status(500).json({msg: 'Empty Query'})
         }
         try {
-            const result = await this._databaseService.executeCypher(req.body.cmd)
+            const result = await this._databaseService.executeQurey(req.body.cmd)
             res.status(200).json(result)
         } catch(err) {
             res.status(500).json({msg: `${err}`})

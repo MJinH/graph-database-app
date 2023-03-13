@@ -4,10 +4,11 @@ import styled from "styled-components";
 
 
 export const EditorContainer = styled.div`
-    width: 95%;
+    flex:3;
     display: flex;
     flex-direction: column;
     background-color: #f0ffff;
+    box-sizing: border-box;
 `
 
 export const EditorWrapper = styled.div`

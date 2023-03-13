@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.NormalChart {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  height: 100%;
+}
+
+.globalFrameWrapper::-webkit-scrollbar {
+  display:none;
+}
+
+.close {
+  position: absolute;
+  right: 0.8rem;
+  cursor: pointer;
+}
